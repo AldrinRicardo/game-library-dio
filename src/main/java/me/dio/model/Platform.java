@@ -14,14 +14,6 @@ public class Platform {
 	private String name;
 	private String company;
 	private int yearOfRelease;
-	
-	public Platform(Long id, String name, String company, int yearOfRelease) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.company = company;
-		this.yearOfRelease = yearOfRelease;
-	}
 
 	public Long getId() {
 		return id;
@@ -54,7 +46,4 @@ public class Platform {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
-
-	
 }

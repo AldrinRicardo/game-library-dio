@@ -2,9 +2,13 @@ package me.dio.service;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.stereotype.Service;
+
+import me.dio.model.Game;
 import me.dio.model.Platform;
 import me.dio.repository.PlatformRepository;
 
+@Service
 public class PlatformService {
 
 	private PlatformRepository platformRepository;
@@ -24,5 +28,8 @@ public class PlatformService {
     		return platformRepository.save(gameToSave);
     	}
     }
-
+    
+    public boolean existsById(Game game) {
+    	return platformRepository.existsById(game.getPlatform().getId());
+    }
 }

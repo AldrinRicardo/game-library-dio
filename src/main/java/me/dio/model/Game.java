@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Game {
@@ -13,19 +13,10 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@OneToMany
-	private Platform[] platforms;
+	@OneToOne
+	private Platform platform;
 	private String genre;
 	private int yearOfRelease;
-	
-	public Game(Long id, String name, Platform[] platforms, String genre, int yearOfRelease) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.platforms = platforms;
-		this.genre = genre;
-		this.yearOfRelease = yearOfRelease;
-	}
 
 	public Long getId() {
 		return id;
@@ -43,12 +34,12 @@ public class Game {
 		this.name = name;
 	}
 
-	public Platform[] getPlatforms() {
-		return platforms;
+	public Platform getPlatform() {
+		return platform;
 	}
 
-	public void setPlatforms(Platform[] platforms) {
-		this.platforms = platforms;
+	public void setPlatform(Platform platform) {
+		this.platform = platform;
 	}
 
 	public String getGenre() {

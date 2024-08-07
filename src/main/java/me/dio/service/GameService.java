@@ -1,36 +1,48 @@
 package me.dio.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.springframework.stereotype.Service;
 
 import me.dio.model.Game;
 import me.dio.repository.GameRepository;
 import me.dio.repository.PlatformRepository;
 
+@Service
 public class GameService {
 
+	private PlatformRepository platformRepository;
 	private GameRepository gameRepository;
+	
 	public GameService(GameRepository gameRepository, PlatformRepository platformRepository) {
 		super();
 		this.gameRepository = gameRepository;
+		this.platformRepository = platformRepository;
 	}
 	
-    public Game findById(Long id) {
+	public List<Game> findAll() {
+		return gameRepository.findAll();
+	}
+	
+	public Game findById(Long id) {
         return gameRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
     
     public Game save(Game gameToSave) {
-    	if (gameRepository.existsById(gameToSave.getId())) {
-    		throw new IllegalArgumentException("Game already exists in the database.");
-    	} else {
-    		return gameRepository.save(gameToSave);
+    	if (this.existsById(gameToSave)) {
+    		throw new IllegalArgumentException("Game is already in the library.");	
+    	} else if (!(platformRepository.existsById(gameToSave.getPlatform().getId()))) {
+    		throw new NoSuchElementException("Platform not found on the library.");
     	}
+    	return gameRepository.save(gameToSave);
     }
     
     public Game update(Long id, Game gameToUpdate) {
     	Game dbGame = this.findById(id);
     	if (dbGame.getId().equals(gameToUpdate.getId())) {
     		dbGame.setName(gameToUpdate.getName());
-    		dbGame.setPlatforms(gameToUpdate.getPlatforms());
+    		dbGame.setPlatform(gameToUpdate.getPlatform());
     		dbGame.setGenre(gameToUpdate.getGenre());
     		dbGame.setYearOfRelease(gameToUpdate.getYearOfRelease());
     		return gameRepository.save(dbGame);
@@ -42,4 +54,9 @@ public class GameService {
     public void delete(Game gameToDelete) {
     	gameRepository.delete(gameToDelete);
     }
+    
+    public boolean existsById(Game game) {
+    	return gameRepository.existsById(game.getPlatform().getId());
+    }
+    
 }
