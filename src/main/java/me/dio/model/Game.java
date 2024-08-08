@@ -1,10 +1,12 @@
 package me.dio.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Game {
@@ -13,7 +15,7 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Platform platform;
 	private String genre;
 	private int yearOfRelease;
@@ -57,6 +59,4 @@ public class Game {
 	public void setYearOfRelease(int yearOfRelease) {
 		this.yearOfRelease = yearOfRelease;
 	}
-	
-	
 }

@@ -32,4 +32,10 @@ public class PlatformService {
     public boolean existsById(Game game) {
     	return platformRepository.existsById(game.getPlatform().getId());
     }
+    
+    public void delete(Long id) {
+    	Platform p = this.findById(id);
+    	platformRepository.delete(p);
+    }
+    
 }

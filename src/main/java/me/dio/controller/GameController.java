@@ -46,15 +46,15 @@ public class GameController {
 		return ResponseEntity.created(location).body(gameSaved);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Game> update(@PathVariable Long id, @RequestBody Game gameToUpdate){
-		Game gameUpdated = gameService.update(id, gameToUpdate);
-		return ResponseEntity.ok(gameUpdated);
-	}
+	@PutMapping("/{id}")
+	public ResponseEntity<Game> update(@PathVariable Long id, @RequestBody Game game) {
+        gameService.update(id, game);
+        return ResponseEntity.ok(game);
+    }
 	
-	@DeleteMapping
-	public ResponseEntity<Void> delete(@PathVariable Game game){
-		gameService.delete(game);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id){
+		gameService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
